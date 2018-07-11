@@ -3,41 +3,47 @@ import {Platform} from 'react-native';
 const home = {
   homeContainer: {
     flex: 1,
-    justifyContent: 'flex-end',
-    marginVertical: 20
+    justifyContent: "center",
+    backgroundColor: "#FB4D3D",
+    paddingBottom: 25,
   },
   header: {
+    backgroundColor: "#FB4D3D",
+    borderColor: 'transparent',
+    borderBottomWidth: 0,
   },
   headerText: {
-    color: (Platform.OS === 'ios') ? null : "white"
+    // color: Platform.OS === "ios" ? null : "white"
+    color: "#FB4D3D",
   },
   button: {
-    flexDirection: 'row',
+    flexDirection: "row",
     height: 50,
-    justifyContent: 'flex-start',
+    justifyContent: "flex-start",
     paddingLeft: 40
   },
   homeButtonContainer: {
-    flexDirection: 'column',
-    marginVertical: 10,
+    flexDirection: "column",
+    marginVertical: 20,
     marginHorizontal: 20,
     borderWidth: 1,
-    borderColor: 'lightgrey',
-    borderRadius: 10
+    borderColor: "lightgrey",
+    borderRadius: 10,
+    // backgroundColor: "#FB4D3D",
   },
-  buttonText : {
+  buttonText: {
     fontSize: 15,
-    color: 'white'
+    color: "white"
   },
   logoContainer: {
-    flexDirection: 'column',
-    marginHorizontal: 10,
-    alignItems: 'center',
-    paddingVertical: 20
+    flexDirection: "column",
+    alignItems: "center",
+    paddingVertical: 40,
+    backgroundColor: "#FB4D3D"
   },
   logo: {
-    width: 200,
-    height: 200
+    width: 150,
+    height: 250
   }
 };
 

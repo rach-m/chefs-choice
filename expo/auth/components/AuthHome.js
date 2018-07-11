@@ -1,44 +1,52 @@
-import React from 'react';
-import {View, StyleSheet, Image} from 'react-native';
-import Expo from 'expo';
-import {Container, Header, Left, Body, Right, Text, Spinner, Root} from 'native-base';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {home} from '../stylesheet';
-import {fetchAuthConf, loadFonts} from '../actions';
-import IndexUsername from './username/Index';
-import IndexOtp from './otp/Index';
-import EmailSignup from './email/Signup';
-import EmailLogin from './email/Login';
-import IndexEmail from './email/Index';
-import {handleFacebookAuth} from './facebook/actions';
-import {handleGoogleAuth} from './google/actions';
-import {storeSession} from '../actions';
+import React from "react";
+import { View, StyleSheet, Image } from "react-native";
+import Expo from "expo";
+import {
+  Container,
+  Header,
+  Left,
+  Body,
+  Right,
+  Text,
+  Spinner,
+  Root
+} from "native-base";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { home } from "../stylesheet";
+import { fetchAuthConf, loadFonts } from "../actions";
+import IndexUsername from "./username/Index";
+import IndexOtp from "./otp/Index";
+import EmailSignup from "./email/Signup";
+import EmailLogin from "./email/Login";
+import IndexEmail from "./email/Index";
+import { handleFacebookAuth } from "./facebook/actions";
+import { handleGoogleAuth } from "./google/actions";
+import { storeSession } from "../actions";
 
 const styles = StyleSheet.create(home);
 
 export default class AuthHome extends React.Component {
-
   static navigationOptions = {
     header: null
   };
 
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
       loading: true,
       loginScreenOpen: null,
       authConf: null,
-      isError: false,
-    }
+      isError: false
+    };
   }
 
-  async componentWillMount () {
+  async componentWillMount() {
     loadFonts();
     const authConf = await fetchAuthConf();
     this.getLoginMethods(authConf);
   }
 
-  getLoginMethods = (authConf) => {
+  getLoginMethods = authConf => {
     const loginMethods = [];
     if (!authConf.success) {
       this.setState({
@@ -63,27 +71,35 @@ export default class AuthHome extends React.Component {
     if (authConf.facebook) {
       loginMethods.push("Facebook");
     }
-    if (loginMethods.length === 1 && loginMethods[0] !== "Google" && loginMethods[0] !== "Facebook") {
+    if (
+      loginMethods.length === 1 &&
+      loginMethods[0] !== "Google" &&
+      loginMethods[0] !== "Facebook"
+    ) {
       this.openLoginScreen(loginMethods[0]);
     }
     this.setState({
-      ...this.state, isError: false, loading: false, authConf, loginMethods
+      ...this.state,
+      isError: false,
+      loading: false,
+      authConf,
+      loginMethods
     });
-  }
+  };
 
   setLoading = () => {
     this.setState({
       ...this.state,
       loading: true
-    })
-  }
+    });
+  };
 
   unsetLoading = () => {
     this.setState({
       ...this.state,
       loading: false
-    })
-  }
+    });
+  };
 
   backToHome = () => {
     this.setState({
@@ -91,18 +107,20 @@ export default class AuthHome extends React.Component {
       loginScreenOpen: null,
       signupScreenOpen: null
     });
-  }
+  };
 
-
-
-  openLoginScreen = (method) => {
+  openLoginScreen = method => {
     this.setState({
-      ...this.state, loginScreenOpen: method
-    })
-  }
+      ...this.state,
+      loginScreenOpen: method
+    });
+  };
 
   usernameLoginButton = () => {
-    if (!this.state.authConf || (this.state.authConf && !this.state.authConf.username)) {
+    if (
+      !this.state.authConf ||
+      (this.state.authConf && !this.state.authConf.username)
+    ) {
       return null;
     }
     return (
@@ -110,16 +128,22 @@ export default class AuthHome extends React.Component {
         <FontAwesome.Button
           style={styles.button}
           name="user"
-          backgroundColor="indigo"
-          onPress={() => this.openLoginScreen("Username")}>
+          backgroundColor="transparent"
+          justifyContent="center"
+          paddingRight="5%"
+          onPress={() => this.openLoginScreen("Username")}
+        >
           <Text style={styles.buttonText}>Login with Username</Text>
         </FontAwesome.Button>
       </View>
     );
-  }
+  };
 
   emailLoginButton = () => {
-    if (!this.state.authConf || (this.state.authConf && !this.state.authConf.email)) {
+    if (
+      !this.state.authConf ||
+      (this.state.authConf && !this.state.authConf.email)
+    ) {
       return null;
     }
     return (
@@ -127,16 +151,22 @@ export default class AuthHome extends React.Component {
         <FontAwesome.Button
           style={styles.button}
           name="envelope"
-          backgroundColor="darkorange"
-          onPress={() => this.openLoginScreen("Email")}>
+          backgroundColor="transparent"
+          justifyContent="center"
+          paddingRight="8%"
+          onPress={() => this.openLoginScreen("Email")}
+        >
           <Text style={styles.buttonText}>Login with Email</Text>
         </FontAwesome.Button>
       </View>
     );
-  }
+  };
 
   mobileLoginButton = () => {
-    if (!this.state.authConf || (this.state.authConf && !this.state.authConf.mobileOtp)) {
+    if (
+      !this.state.authConf ||
+      (this.state.authConf && !this.state.authConf.mobileOtp)
+    ) {
       return null;
     }
     return (
@@ -144,50 +174,78 @@ export default class AuthHome extends React.Component {
         <FontAwesome.Button
           style={styles.button}
           name="mobile-phone"
-          backgroundColor="forestgreen"
-          onPress={() => this.openLoginScreen("OTP")}>
+          backgroundColor="transparent"
+          justifyContent="center"
+          paddingRight="5%"
+          onPress={() => this.openLoginScreen("OTP")}
+        >
           <Text style={styles.buttonText}>Login with Mobile-OTP</Text>
         </FontAwesome.Button>
       </View>
     );
-  }
+  };
 
   facebookButton = () => {
     if (this.state.authConf.facebook) {
       return (
         <View style={styles.homeButtonContainer}>
-          <FontAwesome.Button style={styles.button} name="facebook" backgroundColor="#3b5998" onPress={() => handleFacebookAuth(this.state.authConf.facebook, this.props.loginCallback, this.setLoading, this.unsetLoading)} >
-            <Text style={styles.buttonText} >Login with Facebook</Text>
+          <FontAwesome.Button
+            style={styles.button}
+            name="facebook"
+            backgroundColor="#3b5998"
+            onPress={() =>
+              handleFacebookAuth(
+                this.state.authConf.facebook,
+                this.props.loginCallback,
+                this.setLoading,
+                this.unsetLoading
+              )
+            }
+          >
+            <Text style={styles.buttonText}>Login with Facebook</Text>
           </FontAwesome.Button>
         </View>
       );
     }
     return null;
-  }
+  };
 
   googleButton = () => {
-    if (this.state.authConf.googleArray && this.state.authConf.googleArray.length >= 2) {
+    if (
+      this.state.authConf.googleArray &&
+      this.state.authConf.googleArray.length >= 2
+    ) {
       return (
         <View style={styles.homeButtonContainer}>
-          <FontAwesome.Button style={styles.button} name="google" backgroundColor='#db3236' onPress={() => handleGoogleAuth(this.state.authConf.googleArray[1], this.state.authConf.googleArray[2], this.props.loginCallback, this.setLoading, this.unsetLoading)} >
+          <FontAwesome.Button
+            style={styles.button}
+            name="google"
+            backgroundColor="#db3236"
+            onPress={() =>
+              handleGoogleAuth(
+                this.state.authConf.googleArray[1],
+                this.state.authConf.googleArray[2],
+                this.props.loginCallback,
+                this.setLoading,
+                this.unsetLoading
+              )
+            }
+          >
             <Text style={styles.buttonText}>Login with Google</Text>
           </FontAwesome.Button>
         </View>
-      )
+      );
     }
     return null;
-  }
+  };
 
   logoView = () => {
     return (
       <View style={styles.logoContainer}>
-        <Image
-          style={styles.logo}
-          source={{uri: 'https://www.colessecuritysystems.com/wp-content/uploads/2016/09/logo-placeholder.jpg'}}
-        />
+        <Image style={styles.logo} source={require("../assets/logo.png")} />
       </View>
     );
-  }
+  };
 
   error() {
     return (
@@ -203,7 +261,7 @@ export default class AuthHome extends React.Component {
         <Spinner />
       </View>
     );
-  }
+  };
 
   render() {
     const {
@@ -223,24 +281,35 @@ export default class AuthHome extends React.Component {
     }
 
     if (loginScreenOpen) {
-      if (loginScreenOpen === 'Username') {
+      if (loginScreenOpen === "Username") {
         return (
-          <IndexUsername homeCallback={this.backToHome} loginCallback={this.props.loginCallback} shouldShowBackButton={this.state.loginMethods.length !== 1}/>
-        )
+          <IndexUsername
+            homeCallback={this.backToHome}
+            loginCallback={this.props.loginCallback}
+            shouldShowBackButton={this.state.loginMethods.length !== 1}
+          />
+        );
       }
-      if (loginScreenOpen === 'OTP') {
+      if (loginScreenOpen === "OTP") {
         return (
-          <IndexOtp homeCallback={this.backToHome} loginCallback={this.props.loginCallback} task='login' shouldShowBackButton={this.state.loginMethods.length !== 1}/>
-        )
+          <IndexOtp
+            homeCallback={this.backToHome}
+            loginCallback={this.props.loginCallback}
+            task="login"
+            shouldShowBackButton={this.state.loginMethods.length !== 1}
+          />
+        );
       }
-      if (loginScreenOpen === 'Email') {
+      if (loginScreenOpen === "Email") {
         return (
-          <IndexEmail homeCallback={this.backToHome} loginCallback={this.props.loginCallback}  shouldShowBackButton={this.state.loginMethods.length !== 1}/>
-        )
+          <IndexEmail
+            homeCallback={this.backToHome}
+            loginCallback={this.props.loginCallback}
+            shouldShowBackButton={this.state.loginMethods.length !== 1}
+          />
+        );
       }
     }
-
-
 
     return (
       <Root>
@@ -256,7 +325,7 @@ export default class AuthHome extends React.Component {
             {this.logoView()}
             {this.usernameLoginButton()}
             {this.emailLoginButton()}
-            {this.mobileLoginButton()}
+            {/* {this.mobileLoginButton()} */}
             {this.googleButton()}
             {this.facebookButton()}
           </View>
