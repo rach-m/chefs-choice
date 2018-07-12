@@ -1,4 +1,4 @@
-import {default as AppIndexScreen} from './src/AppScreen';
+import { default as AppIndexScreen } from "./src/AppScreen.js";
 import { Platform, StatusBar} from 'react-native';
 import React from 'react';
 import {View, StyleSheet, AsyncStorage} from 'react-native';

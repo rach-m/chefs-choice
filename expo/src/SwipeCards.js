@@ -3,9 +3,9 @@
 
 import React, { Component } from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
-import Recipes from "./Recipes";
-
+import AppScreen from "./AppScreen";
 import SwipeCards from "react-native-swipe-cards";
+// import searchInput from "./searchApi";
 
 class Card extends React.Component {
   constructor(props) {
@@ -13,10 +13,13 @@ class Card extends React.Component {
   }
 
   render() {
+    let recipes = this.props.recipes;
     return (
-      <View
-        style={[styles.card, { backgroundColor: this.props.backgroundColor }]}
-      >
+      <View style={[styles.card]}>
+        <Image
+          style={styles.foodImage}
+          source={{ uri: this.props.image }}
+        />
         <Text>{this.props.text}</Text>
       </View>
     );
@@ -41,16 +44,17 @@ class NoMoreCards extends Component {
 export default class extends React.Component {
   constructor(props) {
     super(props);
+    let recipes = this.props.recipes;
+    console.log(recipes);
     this.state = {
-      cards: [
-        { text: "recipe name", backgroundColor: "red" },
-        { text: "Aubergine", backgroundColor: "purple" },
-        { text: "Courgette", backgroundColor: "green" },
-        { text: "Blueberry", backgroundColor: "blue" },
-        { text: "Umm...", backgroundColor: "cyan" },
-        { text: "orange", backgroundColor: "orange" }
-      ]
+      cards: []
     };
+    recipes.forEach(recipeArray => {
+      this.state.cards.push({
+        text: recipeArray.recipe.label,
+        image: recipeArray.recipe.image
+      });
+    });
   }
 
   handleYup(card) {
@@ -63,18 +67,22 @@ export default class extends React.Component {
     console.log(`Maybe for ${card.text}`);
   }
   render() {
+    console.log("i work");
     // If you want a stack of cards instead of one-per-one view, activate stack mode
     // stack={true}
+
     return (
-      <SwipeCards
-        cards={this.state.cards}
-        renderCard={cardData => <Card {...cardData} />}
-        renderNoMoreCards={() => <NoMoreCards />}
-        handleYup={this.handleYup}
-        handleNope={this.handleNope}
-        handleMaybe={this.handleMaybe}
-        hasMaybeAction
-      />
+      <View>
+        <SwipeCards
+          cards={this.state.cards}
+          renderCard={cardData => <Card {...cardData} />}
+          renderNoMoreCards={() => <NoMoreCards />}
+          handleYup={this.handleYup}
+          handleNope={this.handleNope}
+          handleMaybe={this.handleMaybe}
+          hasMaybeAction
+        />
+      </View>
     );
   }
 }
@@ -83,13 +91,21 @@ const styles = StyleSheet.create({
   card: {
     justifyContent: "center",
     alignItems: "center",
+    borderColor: 'black',
+    borderWidth: 3,
+    paddingBottom: 45,
+    zIndex: 2,
+    borderRadius: 15,
+  },
+  foodImage: {
+    height: 300,
     width: 300,
-    height: 300
+    borderRadius: 15,
   },
   noMoreCardsText: {
     fontSize: 25,
     alignItems: "center",
     justifyContent: "center",
-    textAlign: 'center'
+    textAlign: "center"
   }
 });
