@@ -32,7 +32,7 @@ export default class AppScreen extends React.Component {
 
       input = this.state.input
       if (input !== null) {
-         fetch(`https://api.edamam.com/search?q=${input}&app_id=03b9b48e&app_key=b5f03ee3a86824849490d1ffc2d0fa6e`)
+         fetch(`https://api.edamam.com/search?q=${input}&to=30&app_id=03b9b48e&app_key=b5f03ee3a86824849490d1ffc2d0fa6e`)
            .then(response => {
              return response.json();
            })
@@ -54,12 +54,12 @@ export default class AppScreen extends React.Component {
         // }
   render() {
     let view;
+    let loading;
     if(this.state.recipes.length > 0) {
-      view = (
-        <View>
-        <SwipeCards style={{ flex: 1 }} recipes={this.state.recipes} />
-        </View>
-      )
+      view = <View>
+          <SwipeCards style={{ flex: 1 }} recipes={this.state.recipes} />
+          <Button title="Logout" onPress={this.props.logoutCallback} />
+        </View>;
     }
     return <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "white" }}>
         <Dialog.Container visible={this.state.visible}>
@@ -78,21 +78,10 @@ export default class AppScreen extends React.Component {
             }} />
         </Dialog.Container>
         {view}
-        <Button title="Logout" onPress={this.props.logoutCallback} />
+
       </View>
   }
 }
 
 const styles = StyleSheet.create({
-  modal: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  inputStyle: {
-    fontSize: 40,
-    alignItems: "center",
-    justifyContent: "center",
-    textAlign: "center"
-  }
 });

@@ -1,0 +1,8 @@
+- args:
+    sql: CREATE TABLE "favorites"("id" serial NOT NULL UNIQUE, "recipe_name" text
+      NOT NULL, "recipe_link" text NOT NULL, "recipe_image" text NOT NULL, PRIMARY
+      KEY ("id") )
+  type: run_sql
+- args:
+    name: favorites
+  type: add_existing_table_or_view
