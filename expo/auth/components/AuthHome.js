@@ -71,13 +71,13 @@ export default class AuthHome extends React.Component {
     if (authConf.facebook) {
       loginMethods.push("Facebook");
     }
-    if (
-      loginMethods.length === 1 &&
-      loginMethods[0] !== "Google" &&
-      loginMethods[0] !== "Facebook"
-    ) {
-      this.openLoginScreen(loginMethods[0]);
-    }
+    // if (
+    //   loginMethods.length === 1 &&
+    //   loginMethods[0] !== "Google" &&
+    //   loginMethods[0] !== "Facebook"
+    // ) {
+    //   this.openLoginScreen(loginMethods[0]);
+    // }
     this.setState({
       ...this.state,
       isError: false,
@@ -140,12 +140,12 @@ export default class AuthHome extends React.Component {
   };
 
   emailLoginButton = () => {
-    if (
-      !this.state.authConf ||
-      (this.state.authConf && !this.state.authConf.email)
-    ) {
-      return null;
-    }
+    // if (
+    //   !this.state.authConf ||
+    //   (this.state.authConf && !this.state.authConf.email)
+    // ) {
+    //   return null;
+    // }
     return (
       <View style={styles.homeButtonContainer}>
         <FontAwesome.Button
@@ -312,7 +312,7 @@ export default class AuthHome extends React.Component {
     }
 
     return (
-      <Root>
+    <Root>
         <Container>
           <Header style={styles.header}>
             <Left />
@@ -325,12 +325,9 @@ export default class AuthHome extends React.Component {
             {this.logoView()}
             {this.usernameLoginButton()}
             {this.emailLoginButton()}
-            {/* {this.mobileLoginButton()} */}
-            {this.googleButton()}
-            {this.facebookButton()}
           </View>
         </Container>
       </Root>
-    );
+    )
   }
 }

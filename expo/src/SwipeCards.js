@@ -15,13 +15,16 @@ class Card extends React.Component {
 
   render() {
     let recipes = this.props.recipes;
+
     return (
-      <View style={[styles.card]}>
+      <View style={[styles.card]} userId={this.props.userId}>
         <Image style={styles.foodImage} source={{ uri: this.props.image }} />
         <Text>{this.props.text}</Text>
+
         {this.props.ingredients.map(ingredient => {
           return <Text style={styles.ingredients}>{ingredient}</Text>;
         })}
+        {/* <Text>{this.props.url}</Text> */}
       </View>
     );
   }
@@ -45,42 +48,50 @@ class NoMoreCards extends Component {
 export default class extends React.Component {
   constructor(props) {
     super(props);
-     let recipes = this.props.recipes;
-    // console.log(recipes)
-    this.state = {
-      cards: []
-    };
+    let recipes = this.props.recipes;
+    this.state = { cards: [] };
     recipes.forEach(recipeArray => {
       this.state.cards.push({
+        key: recipeArray.recipe.url,
         text: recipeArray.recipe.label,
         image: recipeArray.recipe.image,
-        ingredients: recipeArray.recipe.ingredientLines
+        ingredients: recipeArray.recipe.ingredientLines,
+        url: recipeArray.recipe.url,
+        user_id: this.props.userId
       });
     });
-    // this.saveRecipe = this.saveRecipe.bind(this)
   }
 
-  saveRecipe(card) {
-    this.props.recipes.forEach(recipeArray => {
-      let url = recipeArray.recipe.url;
-    });
-    fetch("https://data.broadcasting79.hasura-app.io/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        recipe_name: card.text,
-        recipe_link: this.props.url,
-        recipe_image: card.image
-      })
-    })
-    return console.log("posted");
-  };
-
-
   handleYup(card) {
-    console.log(`Yup for ${card.text}`)
+    console.log(`Yup for ${card.text}`);
+    var url =
+      "https://data.broadcasting79.hasura-app.io/api/1/table/favorites/insert";
+
+    var requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        objects: [
+          {
+            recipe_name: card.text,
+            recipe_link: card.url,
+            recipe_image: card.image,
+            hasura_id: card.user_id
+          }
+        ]
+      })
+    };
+    fetch(url, requestOptions)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(result) {
+        console.log(result);
+      })
+      .catch(function(error) {
+        console.log("Request Failed:" + error);
+      });
+    console.log("posted");
   }
 
   handleNope(card) {
@@ -92,19 +103,14 @@ export default class extends React.Component {
   render() {
     // If you want a stack of cards instead of one-per-one view, activate stack mode
     // stack={true}
-  if (this.handleYup)
-{
-    let card = <Card />;
-    this.saveRecipe(card)
-  }
+
     return (
-      <View>
+      <View style={styles.container}>
         <SwipeCards
           cards={this.state.cards}
           renderCard={cardData => <Card {...cardData} />}
           renderNoMoreCards={() => <NoMoreCards />}
           handleYup={this.handleYup}
-          onPress = {this.saveRecipe}
           handleNope={this.handleNope}
           handleMaybe={this.handleMaybe}
           hasMaybeAction
@@ -115,12 +121,15 @@ export default class extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    maxHeight: 500
+  },
   card: {
-    justifyContent: "center",
+    // justifyContent: "flex-start",
     alignItems: "center",
     borderColor: "black",
     borderWidth: 3,
-    paddingBottom: 15,
+    // paddingBottom: 15,
     zIndex: 2,
     borderRadius: 15,
     maxHeight: 400,

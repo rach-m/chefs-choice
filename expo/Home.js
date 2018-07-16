@@ -138,9 +138,7 @@ export default class Index extends React.Component {
       );
     }
     if (this.state.session.isLoggedIn) {
-      return (
-        <AppIndexScreen logoutCallback={this.logout} sessionInfo={this.state.session.sessionInfo}/>
-      );
+      return <AppIndexScreen logoutCallback={this.logout} sessionInfo={this.state.session.sessionInfo} navigation={this.props.navigation} />;
     }
     return (
       <View style={styles.container} >

@@ -24,7 +24,7 @@ const home = {
   },
   homeButtonContainer: {
     flexDirection: "column",
-    marginVertical: 20,
+    marginVertical: 10,
     marginHorizontal: 20,
     borderWidth: 1,
     borderColor: "lightgrey",

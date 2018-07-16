@@ -1,0 +1,16 @@
+- args:
+    role: anonymous
+    table: favorites
+  type: drop_select_permission
+- args:
+    permission:
+      columns:
+      - recipe_name
+      - recipe_image
+      - recipe_link
+      - id
+      - hasura_id
+      filter: {}
+    role: anonymous
+    table: favorites
+  type: create_select_permission
