@@ -21,8 +21,8 @@ class Card extends React.Component {
         <Image style={styles.foodImage} source={{ uri: this.props.image }} />
         <Text>{this.props.text}</Text>
 
-        {this.props.ingredients.map(ingredient => {
-          return <Text style={styles.ingredients}>{ingredient}</Text>;
+        {this.props.ingredients.map((ingredient, i) => {
+          return <Text key={i} style={styles.ingredients}>{ingredient}</Text>;
         })}
         {/* <Text>{this.props.url}</Text> */}
       </View>
@@ -39,7 +39,7 @@ class NoMoreCards extends Component {
     return (
       <View>
         <Text style={styles.noMoreCardsText}>No more recipes.</Text>
-        <Text style={styles.noMoreCardsText}>Check out your cookbook!</Text>
+        <Text style={styles.noMoreCardsText}>Check out your cookbook! </Text>
       </View>
     );
   }
@@ -108,7 +108,7 @@ export default class extends React.Component {
       <View style={styles.container}>
         <SwipeCards
           cards={this.state.cards}
-          renderCard={cardData => <Card {...cardData} />}
+          renderCard={cardData => <Card  {...cardData} />}
           renderNoMoreCards={() => <NoMoreCards />}
           handleYup={this.handleYup}
           handleNope={this.handleNope}
@@ -122,16 +122,14 @@ export default class extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    maxHeight: 500
+    maxHeight: 400
   },
   card: {
-    // justifyContent: "flex-start",
+
     alignItems: "center",
     borderColor: "black",
-    borderWidth: 3,
-    // paddingBottom: 15,
+    borderWidth: 2,
     zIndex: 2,
-    borderRadius: 15,
     maxHeight: 400,
     maxWidth: 300,
     overflow: "hidden"
@@ -140,7 +138,6 @@ const styles = StyleSheet.create({
     height: 250,
     width: 250,
     maxHeight: 250,
-    borderRadius: 10
   },
   noMoreCardsText: {
     fontSize: 25,

@@ -23,6 +23,7 @@
     "native-base": "^2.3.9",
     "react": "16.2.0",
     "react-native": "0.52.0",
+    "react-native-deep-linking": "^2.1.0",
     "react-native-dialog": "^5.1.0",
     "react-native-elements": "^0.19.1",
     "react-native-swipe-cards": "^0.1.1",

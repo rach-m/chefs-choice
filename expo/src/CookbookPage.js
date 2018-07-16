@@ -7,73 +7,46 @@ import {
   Image,
   Modal,
   Alert,
-  StatusBar
+  StatusBar,
+  Linking
 } from "react-native";
+import { WebBrowser } from "expo";
 // import {Icon } from "react-native-elements";
 import { StackNavigator } from "react-navigation";
 import { List, ListItem } from "react-native-elements";
+import CookbookIcon from "./CookbookIcon";
 
 export default class CookbookPage extends React.Component {
   constructor(props) {
+    console.log('CookbookPage props: ', props);
     super(props);
-    this.state = {
-      results: []
-    }
   }
 
-  getRecipes() {
-    var url = "https://data.broadcasting79.hasura-app.io/v1/query";
-
-    var requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    };
-
-    var body = {
-      type: "select",
-      args: {
-        table: "favorites",
-        columns: ["recipe_name", "recipe_image", "recipe_link"],
-        where: {
-          hasura_id: {
-            $eq: this.props.userId
-          }
-        }
-      }
-    };
-
-    requestOptions.body = JSON.stringify(body);
-
-    fetch(url, requestOptions)
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(results) {
-        // console.log(results[0].recipe_name)
-          return results
-          this.setState({ results: results });
-      })
-    return <View style = {{flex: 1}}>
-    <List containerStyle={{ marginBottom: 20 }}>
-        {this.state.results.map((result, i) => {
-          <ListItem roundAvatar avatar={{ uri: result.recipe_image }} title={result.recipe_name} subtitle={result.recipe_link} key = {i} />;
-        })}
-      </List>
-      </View>
-    }
-      // .catch(function(error) {
-      //   console.log("Request Failed:" + error);
-      // });
 
 
   render() {
+    const { navigation } = this.props;
+    const results = navigation.getParam("results");
     <StatusBar />;
     return (
-      <View style = {{flex: 1}}>
-      {this.getRecipes()}
+      <View>
+        <List style={{ marginBottom: 20 }}>
+          {results.map((result, i) => {
+           return  <ListItem
+              key={i}
+              roundAvatar
+              avatar={{ url: result.recipe_image }}
+              title={result.recipe_name}
+              subtitle={result.recipe_link}
+              onPress={()=> {
+                   WebBrowser.openBrowserAsync(result.recipe_link);
+              }}
+            />;
+          })}
+        </List>
       </View>
     );
   }
 }
+
+

@@ -9,7 +9,7 @@ import {
   Alert,
   StatusBar
 } from "react-native";
-import { FormLabel, FormInput, Header } from "react-native-elements";
+import { FormLabel, FormInput, Header, Icon } from "react-native-elements";
 import SwipeCards from "./SwipeCards.js";
 import Dialog from "react-native-dialog";
 import CookbookIcon from "./CookbookIcon.js";
@@ -49,7 +49,6 @@ export default class AppScreen extends React.Component {
     }
   }
   render() {
-
     let view;
     let loading;
     if (this.state.recipes.length > 0) {
@@ -71,14 +70,22 @@ export default class AppScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Header
+          style={styles.Header}
           outerContainerStyles={styles.headerOuterContainer}
-          leftComponent={{ icon: "menu", color: "#fff" }}
-          centerComponent={{ text: "MY TITLE", style: { color: "#fff" } }}
-          rightComponent={
-            <CookbookIcon
-              userId={this.props.sessionInfo.id}
+          leftComponent={
+            <Icon
+              name="search"
+              color="#fff"
+              type="feather"
+              onPress={() => {
+                return this.setState({
+                  visible: true,
+                });
+              }}
             />
           }
+          centerComponent={{ text: "CHEF'S CHOICE", style: { color: "#fff" } }}
+          rightComponent={<CookbookIcon userId={this.props.sessionInfo.id} />}
         />
         <Dialog.Container visible={this.state.visible}>
           <Dialog.Title>Recipe Search</Dialog.Title>
@@ -116,10 +123,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#F73F07",
     paddingTop: 0
   },
+
   container: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white"
+  },
+
+  Header: {
+    justifyContent: "flex-start"
   }
 });
