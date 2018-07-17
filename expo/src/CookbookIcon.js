@@ -51,7 +51,6 @@ class CookbookIcon extends React.Component {
             console.log('CookbookIcon results:', this.state.results);
             this.props.navigation.navigate("CookbookPage", {
               results: this.state.results
-              // userId: this.props.userId
             });
           })
         }

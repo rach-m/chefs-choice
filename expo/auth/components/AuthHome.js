@@ -140,12 +140,12 @@ export default class AuthHome extends React.Component {
   };
 
   emailLoginButton = () => {
-    // if (
-    //   !this.state.authConf ||
-    //   (this.state.authConf && !this.state.authConf.email)
-    // ) {
-    //   return null;
-    // }
+    if (
+      !this.state.authConf ||
+      (this.state.authConf && !this.state.authConf.email)
+    ) {
+      return null;
+    }
     return (
       <View style={styles.homeButtonContainer}>
         <FontAwesome.Button

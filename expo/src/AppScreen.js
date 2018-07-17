@@ -3,13 +3,12 @@ import {
   StyleSheet,
   View,
   Text,
-  Button,
   Image,
   Modal,
   Alert,
   StatusBar
 } from "react-native";
-import { FormLabel, FormInput, Header, Icon } from "react-native-elements";
+import { FormLabel, FormInput, Header, Icon, Button } from "react-native-elements";
 import SwipeCards from "./SwipeCards.js";
 import Dialog from "react-native-dialog";
 import CookbookIcon from "./CookbookIcon.js";
@@ -44,10 +43,27 @@ export default class AppScreen extends React.Component {
         })
         .then(recipes => {
           this.setState({ recipes: recipes.hits });
-           this.forceUpdate();
           return recipes;
         });
     }
+  }
+
+  searchAgain = () => {
+
+     return <Dialog.Container visible={this.state.visible}>
+       <Dialog.Title>Recipe Search</Dialog.Title>
+       <Dialog.Description>
+         Please enter a main ingredient you would like to include.
+       </Dialog.Description>
+       <Dialog.Input placeholder="Beef" onChangeText={this.handleInput} />
+       <Dialog.Button label="Submit" onPress={() => {
+           return this.setState({
+             visible: false,
+             input: this.state.input,
+             api: this.setApi(this.state.input)
+           });
+         }} />
+     </Dialog.Container>;
   }
   render() {
     let view;
@@ -60,7 +76,7 @@ export default class AppScreen extends React.Component {
             userId={this.props.sessionInfo.id}
           />
           <Button
-            style={styles.Button}
+            buttonStyle={styles.buttonStyle}
             title="Logout"
             onPress={this.props.logoutCallback}
           />
@@ -79,10 +95,17 @@ export default class AppScreen extends React.Component {
               color="#fff"
               type="feather"
               onPress={() => {
-                this.setState({ visible: true });
+              <Dialog.Container visible={true}>
+                <Dialog.Title>
+                  Sorry this feature is not available yet. Check
+                  back soon!!
+                </Dialog.Title>
+                <Dialog.Button label="Close" visible = {false} onPress = {()=> {
+                  console.log('closed')
+                }}/>
+              </Dialog.Container>;
               }}
-            />
-          }
+            />}
           centerComponent={{ text: "CHEF'S CHOICE", style: { color: "#fff" } }}
           rightComponent={<CookbookIcon userId={this.props.sessionInfo.id} />}
         />
@@ -109,9 +132,13 @@ export default class AppScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  Button: {
-    justifyContent: "flex-end",
-    paddingBottom: 45
+  buttonStyle: {
+    justifyContent: "center",
+    paddingVertical: 15,
+    backgroundColor: "#F73F07",
+    borderRadius: 10,
+    marginTop: 25,
+    alignItems: "center"
   },
   headerOuterContainer: {
     justifyContent: "flex-start",
