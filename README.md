@@ -117,22 +117,22 @@ Screenshots
 <br>
 
 Landing Page:
-<img src = '/Users/rachelmoskowitz/Desktop/react-native-auth-boilerplate/readme-assets/WhatsApp Image 2018-07-16 at 9.35.22 PM.jpeg'>
+<img src = './readme-assets/WhatsApp Image 2018-07-16 at 9.35.22 PM.jpeg'>
 <br>
 
 Sign Up:
-<img src = '/Users/rachelmoskowitz/Desktop/react-native-auth-boilerplate/readme-assets/WhatsApp Image 2018-07-16 at 9.35.42 PM.jpeg'>
+<img src = './readme-assets/WhatsApp Image 2018-07-16 at 9.35.42 PM.jpeg'>
 <br>
 
 Search:
-<img src = '/Users/rachelmoskowitz/Desktop/react-native-auth-boilerplate/readme-assets/WhatsApp Image 2018-07-16 at 9.36.40 PM.jpeg'>
+<img src = './readme-assets/WhatsApp Image 2018-07-16 at 9.36.40 PM.jpeg'>
 <br>
 
 Card View:
-<img src = '/Users/rachelmoskowitz/Desktop/react-native-auth-boilerplate/readme-assets/WhatsApp Image 2018-07-16 at 9.37.32 PM.jpeg'>
+<img src = './readme-assets/WhatsApp Image 2018-07-16 at 9.37.32 PM.jpeg'>
 <br>
 
 Cookbook View:
-<img src = '/Users/rachelmoskowitz/Desktop/react-native-auth-boilerplate/readme-assets/WhatsApp Image 2018-07-16 at 9.38.03 PM.jpeg'>
+<img src = './readme-assets/WhatsApp Image 2018-07-16 at 9.38.03 PM.jpeg'>
 
 
