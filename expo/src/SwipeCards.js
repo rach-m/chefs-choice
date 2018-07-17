@@ -6,7 +6,6 @@ import { StyleSheet, Text, View, Image, FlatList } from "react-native";
 import AppScreen from "./AppScreen";
 import SwipeCards from "react-native-swipe-cards";
 import { ListItem } from "react-native-elements";
-// import searchInput from "./searchApi";
 
 class Card extends React.Component {
   constructor(props) {
@@ -24,7 +23,6 @@ class Card extends React.Component {
         {this.props.ingredients.map((ingredient, i) => {
           return <Text key={i} style={styles.ingredients}>{ingredient}</Text>;
         })}
-        {/* <Text>{this.props.url}</Text> */}
       </View>
     );
   }
@@ -101,9 +99,6 @@ export default class extends React.Component {
     console.log(`Maybe for ${card.text}`);
   }
   render() {
-    // If you want a stack of cards instead of one-per-one view, activate stack mode
-    // stack={true}
-
     return (
       <View style={styles.container}>
         <SwipeCards
@@ -125,7 +120,7 @@ const styles = StyleSheet.create({
     maxHeight: 400
   },
   card: {
-
+    marginTop: 20,
     alignItems: "center",
     borderColor: "black",
     borderWidth: 2,

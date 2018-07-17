@@ -44,6 +44,7 @@ export default class AppScreen extends React.Component {
         })
         .then(recipes => {
           this.setState({ recipes: recipes.hits });
+           this.forceUpdate();
           return recipes;
         });
     }
@@ -78,9 +79,7 @@ export default class AppScreen extends React.Component {
               color="#fff"
               type="feather"
               onPress={() => {
-                return this.setState({
-                  visible: true,
-                });
+                this.setState({ visible: true });
               }}
             />
           }
@@ -96,11 +95,10 @@ export default class AppScreen extends React.Component {
           <Dialog.Button
             label="Submit"
             onPress={() => {
-              return this.setState({
+               return this.setState({
                 visible: false,
                 input: this.state.input,
-                api: this.setApi(this.state.input)
-              });
+                api: this.setApi(this.state.input)})
             }}
           />
         </Dialog.Container>

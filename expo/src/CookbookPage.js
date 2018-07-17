@@ -1,14 +1,13 @@
 import React from "react";
 import {
   StyleSheet,
-  View,
+  ScrollView,
   Text,
   Button,
   Image,
   Modal,
   Alert,
   StatusBar,
-  Linking
 } from "react-native";
 import { WebBrowser } from "expo";
 // import {Icon } from "react-native-elements";
@@ -18,7 +17,6 @@ import CookbookIcon from "./CookbookIcon";
 
 export default class CookbookPage extends React.Component {
   constructor(props) {
-    console.log('CookbookPage props: ', props);
     super(props);
   }
 
@@ -29,7 +27,7 @@ export default class CookbookPage extends React.Component {
     const results = navigation.getParam("results");
     <StatusBar />;
     return (
-      <View>
+      <ScrollView>
         <List style={{ marginBottom: 20 }}>
           {results.map((result, i) => {
            return  <ListItem
@@ -44,7 +42,7 @@ export default class CookbookPage extends React.Component {
             />;
           })}
         </List>
-      </View>
+      </ScrollView>
     );
   }
 }
