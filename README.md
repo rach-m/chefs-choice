@@ -2,7 +2,7 @@
 
 <br>
 <br>
-<b>Technologies:<b>
+<h3>Technologies:</h3>
 <br>
 React Native
 <br>
@@ -113,26 +113,31 @@ As a User I want a way to save recipes so I can reference them later
 The creation of this mobile app was a difficult task. Working exclusively with technologies that I hadn't touched before proved to be both challenging and rewarding. I think this app wiould be useful to anyone who cooks. It is an easy and intuitive way to browse recipes using swipe based decision making. I still do not have the ability for a user to conduct another search without refreshing the app, but I am aware of this and working on it. I would like to implement filters as well as well as some way to organize the saved recipes (most likely alphabetically).
 <br> <br> <br>
 
-Screenshots
+<h3>Screenshots</h3>
 <br>
 
 Landing Page:
+<br>
 <img src = './readme-assets/WhatsApp Image 2018-07-16 at 9.35.22 PM.jpeg'>
 <br>
 
 Sign Up:
+<br>
 <img src = './readme-assets/WhatsApp Image 2018-07-16 at 9.35.42 PM.jpeg'>
 <br>
 
 Search:
+<br>
 <img src = './readme-assets/WhatsApp Image 2018-07-16 at 9.36.40 PM.jpeg'>
 <br>
 
 Card View:
+<br>
 <img src = './readme-assets/WhatsApp Image 2018-07-16 at 9.37.32 PM.jpeg'>
 <br>
 
 Cookbook View:
+<br>
 <img src = './readme-assets/WhatsApp Image 2018-07-16 at 9.38.03 PM.jpeg'>
 
 
