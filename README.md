@@ -1,142 +1,138 @@
-# React Native Auth Boilerplate
+<h1>Chef's Choice</h1>
+
+<br>
+<br>
+<b>Technologies:<b>
+<br>
+React Native
+<br>
+Hasura Backend Server
+<br>
+GraphQl
+<br>
+Edemam Recipe API
+<br>
+<br>
+
+Code Snippet - Making sure that the recipe state was updated before the swipeable cards had rendered was a challenge. I solved this using states and a view variable.
+
+```
+ setApi(input) {
+    let fromRandomNumber = Math.floor(Math.random() * 50);
+    let toRandomNumber = fromRandomNumber + 30;
+    input = this.state.input;
+    if (input !== null) {
+      fetch(
+        `https://api.edamam.com/search?q=${input}&from=${fromRandomNumber}&to=${toRandomNumber}&app_id=03b9b48e&app_key=b5f03ee3a86824849490d1ffc2d0fa6e`
+      )
+        .then(response => {
+          return response.json();
+        })
+        .then(recipes => {
+          this.setState({ recipes: recipes.hits });
+           this.forceUpdate();
+          return recipes;
+        });
+    }
+  }
+  render() {
+    let view;
+    let loading;
+    if (this.state.recipes.length > 0) {
+      view = (
+        <View>
+          <SwipeCards
+            recipes={this.state.recipes}
+            userId={this.props.sessionInfo.id}
+          />
+          <Button
+            style={styles.Button}
+            title="Logout"
+            onPress={this.props.logoutCallback}
+          />
+        </View>
+      );
+    }
+    <StatusBar style={styles.StatusBar} />;
+    return (
+      <View style={styles.container}>
+        <Header
+          style={styles.Header}
+          outerContainerStyles={styles.headerOuterContainer}
+          leftComponent={
+            <Icon
+              name="search"
+              color="#fff"
+              type="feather"
+              onPress={() => {
+                this.setState({ visible: true });
+              }}
+            />
+          }
+          centerComponent={{ text: "CHEF'S CHOICE", style: { color: "#fff" } }}
+          rightComponent={<CookbookIcon userId={this.props.sessionInfo.id} />}
+        />
+        <Dialog.Container visible={this.state.visible}>
+          <Dialog.Title>Recipe Search</Dialog.Title>
+          <Dialog.Description>
+            Please enter a main ingredient you would like to include.
+          </Dialog.Description>
+          <Dialog.Input placeholder="Beef" onChangeText={this.handleInput} />
+          <Dialog.Button
+            label="Submit"
+            onPress={() => {
+               return this.setState({
+                visible: false,
+                input: this.state.input,
+                api: this.setApi(this.state.input)})
+            }}
+          />
+        </Dialog.Container>
+        {view}
+      </View>
+    );
+  }
+}
+
+```
+<br>
+User Stories:
+<br>
+<br>
+As a User I want to be able to go through a collection of recipes quickly
+<br>
+As a User I want an easy format to go through recipes and easily see the main ingredients
+<br>
+As a User I want to be able to tailor the recipes I am seeing to my specifications
+<br>
+As a User I want a way to save recipes so I can reference them later
+
+<br>
+<br>
+<br>
+The creation of this mobile app was a difficult task. Working exclusively with technologies that I hadn't touched before proved to be both challenging and rewarding. I think this app wiould be useful to anyone who cooks. It is an easy and intuitive way to browse recipes using swipe based decision making. I still do not have the ability for a user to conduct another search without refreshing the app, but I am aware of this and working on it. I would like to implement filters as well as well as some way to organize the saved recipes (most likely alphabetically).
+<br> <br> <br>
+
+Screenshots
+<br>
+
+Landing Page:
+<img src = '/Users/rachelmoskowitz/Desktop/react-native-auth-boilerplate/readme-assets/WhatsApp Image 2018-07-16 at 9.35.22 PM.jpeg'>
+<br>
+
+Sign Up:
+<img src = '/Users/rachelmoskowitz/Desktop/react-native-auth-boilerplate/readme-assets/WhatsApp Image 2018-07-16 at 9.35.42 PM.jpeg'>
+<br>
+
+Search:
+<img src = '/Users/rachelmoskowitz/Desktop/react-native-auth-boilerplate/readme-assets/WhatsApp Image 2018-07-16 at 9.36.40 PM.jpeg'>
+<br>
+
+Card View:
+<img src = '/Users/rachelmoskowitz/Desktop/react-native-auth-boilerplate/readme-assets/WhatsApp Image 2018-07-16 at 9.37.32 PM.jpeg'>
+<br>
+
+Cookbook View:
+<img src = '/Users/rachelmoskowitz/Desktop/react-native-auth-boilerplate/readme-assets/WhatsApp Image 2018-07-16 at 9.38.03 PM.jpeg'>
 
-This is a React Native boilerplate with auth already implemented. It uses [Nativebase](https://nativebase.io) for the UI and [Hasura APIs](https://hasura.io/features/auth) for the backend.
 
-This has been created as an open-source boilerplate by the Hasura team. There are instructions below in case you wish to use this boilerplate without the Hasura APIs.
-
-![gif](https://raw.githubusercontent.com/hasura/react-native-auth-boilerplate/master/readme-assets/ios/ios_gif.gif)
-
-## Who should use this?
-
-- Fullstack React Native developers looking to start building an app with authentication already covered. You can modify both the UI and the backend logic to customize it per your own requirements.
-
-- Developers trying to use Hasura with React Native.
-
-
-## Getting Started
-
-### Using this with the Hasura APIs
-
-Make sure you have [hasura CLI](https://docs.hasura.io/0.15/manual/install-hasura-cli.html) installed.
-
-- Clone the repo and `cd` into it.
-
-  ```bash
-  $ git clone https://github.com/hasura/react-native-auth-boilerplate
-  ```
-
-- `cd` into expo directory if you wish to use the expo SDK, or `cd` into the vanilla react native app directory
-
-- Quickstart with the base Hasura project and apply the configuration of the project to the newly created [Hasura cluster](https://docs.hasura.io/0.15/manual/cluster/index.html), as per the instructions below.
-
-  ```bash
-  $ hasura quickstart base
-  $ cd base
-  $ git add . && git commit -m "Applying configuration"
-  $ git push hasura master
-  ```
-
-> The `hasura quickstart` command clones a base Hasura project with basic configuration and creates a free tier [Hasura cluster](https://docs.hasura.io/0.15/manual/cluster/index.html). Running a `git push` to the `hasura` remote applies the configuration from the project (the base project in this case) to the cluster.
-
-
-
-## Running the app
-- You will obtain a cluster name after running `hasura quickstart`. Go back to the expo (or vanilla) directory and set this clusterName in `Hasura.js`. Also set `useHasuraApis` to true.
-
-  ```javascript
-  const clusterName = "<your cluster name>";
-  const useHasuraApis = true;
-  ```
-
-- Install node modules.
-
-  ```bash
-  $ npm install
-  ```
-  - If you are using yarn
-  ```bash
-  $ yarn install
-  ```
-
-- Run the app.
-  - If you are using Expo,
-
-    ```bash
-    $ npm start
-    ```
-
-  - If you are using vanilla React Native,
-
-    ```bash
-    # For Android
-    $ react-native run-android
-
-    # For iOS
-    $ react-native run-ios
-    ```
-
-### Using this without the Hasura APIs
-
-You will have to configure your own login methods if you are not using the Hasura APIs.
-
-- For using the application with Expo SDK, [click here](https://github.com/hasura/react-native-auth-boilerplate/blob/master/expo) for more detailed instructions.
-
-
-- For using this with vanilla react native, [click here](https://github.com/hasura/react-native-auth-boilerplate/blob/master/vanilla) for more detailed instructions.
-
-
-
-
-
-## Contribute
-
-React Native Auth boilerplate is an open source project licensed under Apache License 2.0.
-
-Contributions are welcome.
-
-## Gallery
-
-### Login with Username
-
-#### iOS
-
-![iosusername](https://github.com/hasura/react-native-auth-boilerplate/raw/master/readme-assets/ios/iosusername.jpg)
-
-#### Android
-
-![androidusername](https://github.com/hasura/react-native-auth-boilerplate/raw/master/readme-assets/android/androidusername.jpg)
-
-
-### Login with Email
-
-#### iOS
-
-![iosemail](https://github.com/hasura/react-native-auth-boilerplate/raw/master/readme-assets/ios/iosemail.jpg)
-
-#### Android
-
-![androidemail](https://github.com/hasura/react-native-auth-boilerplate/raw/master/readme-assets/android/androidemail.jpg)
-
-
-### Login with OTP
-
-#### iOS
-
-![iosotp](https://github.com/hasura/react-native-auth-boilerplate/raw/master/readme-assets/ios/iosotp.jpg)
-
-#### Android
-
-![androidotp](https://github.com/hasura/react-native-auth-boilerplate/raw/master/readme-assets/android/androidotp.jpg)
-
-
-### Google and Facebook
-
-#### Expo
-
-##### iOS
-
-![iossocial](https://github.com/hasura/react-native-auth-boilerplate/raw/master/readme-assets/ios/iossocial.jpg)
-
-##### Android
-
-![androidsocial](https://github.com/hasura/react-native-auth-boilerplate/raw/master/readme-assets/android/androidsocial.jpg)
