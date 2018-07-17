@@ -116,27 +116,27 @@ The creation of this mobile app was a difficult task. Working exclusively with t
 <h3>Screenshots</h3>
 <br>
 
-Landing Page:
+<h3>Landing Page:</h3>
 <br>
 <img src = './readme-assets/WhatsApp Image 2018-07-16 at 9.35.22 PM.jpeg'>
 <br>
 
-Sign Up:
+<h3>Sign Up:</h3>
 <br>
 <img src = './readme-assets/WhatsApp Image 2018-07-16 at 9.35.42 PM.jpeg'>
 <br>
 
-Search:
+<h3>Search:</h3>
 <br>
 <img src = './readme-assets/WhatsApp Image 2018-07-16 at 9.36.40 PM.jpeg'>
 <br>
 
-Card View:
+<h3>Card View:</h3>
 <br>
 <img src = './readme-assets/WhatsApp Image 2018-07-16 at 9.37.32 PM.jpeg'>
 <br>
 
-Cookbook View:
+<h3>Cookbook View:</h3>
 <br>
 <img src = './readme-assets/WhatsApp Image 2018-07-16 at 9.38.03 PM.jpeg'>
 
