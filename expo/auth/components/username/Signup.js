@@ -63,7 +63,7 @@ export default class UsernameSignup extends React.Component {
     const signupResp = await trySignup(username, password);
     if (signupResp.success) {
       await storeSession({id: signupResp.hasura_id, token: signupResp.auth_token, type: "username"});
-      Alert.alert('Success', 'Signup Complete');
+      // Alert.alert('Success', 'Signup Complete');
       this.unsetLoading();
       this.props.loginCallback({id: signupResp.hasura_id, token: signupResp.auth_token, type: "username"});
     } else {
